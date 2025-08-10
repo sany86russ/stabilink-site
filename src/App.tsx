@@ -2,7 +2,8 @@
 import React, { useEffect, useState } from 'react'
 import BackgroundFX from './components/BackgroundFX'
 import CompareSlider from './components/CompareSlider'
-import { HeroIllustration, GlobeIllustration, IconRocket, IconBrain, IconShield, IconServers, IconUpdate } from './components/Illustrations'
+import { GlobeIllustration, IconRocket, IconBrain, IconShield, IconServers, IconUpdate } from './components/Illustrations'
+import Globe3D from './components/Globe3D'
 
 function useTypewriter(text: string, speed = 90){
   const [out, setOut] = useState('')
@@ -108,7 +109,7 @@ export default function App(){
             <p style={{marginTop:12}}>Если у вас были сложности с доступом к сервисам вроде <b>Discord</b>, <b>Telegram Web</b> или <b>YouTube</b>, StabiLink стремится вернуть комфорт пользования и стабильность соединения, соблюдая требования законодательства РФ.</p>
           </div>
           <div className='card' style={{height:260, borderRadius:16, display:'grid', placeItems:'center'}}>
-            <GlobeIllustration/>
+            <img src='/illustrations/set.webp' alt='Набор иллюстраций StabiLink' loading='lazy' style={{maxWidth:'100%', height:'100%', objectFit:'contain'}}/>
           </div>
         </div>
       </Section>
@@ -116,11 +117,11 @@ export default function App(){
       <Section id='advantages' title='Преимущества' alt>
         <ul style={{display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(260px,1fr))', gap:16, padding:0, listStyle:'none', margin:0}}>
           {[
-            {icon:<IconRocket/>, t:'Быстрый запуск — одна кнопка START'},
-            {icon:<IconBrain/>, t:'Много алгоритмов и автоадаптация'},
-            {icon:<IconShield/>, t:'Автовыбор лучшей стратегии'},
-            {icon:<IconServers/>, t:'Абсолютно бесплатно'},
-            {icon:<IconShield/>, t:'Не вмешивается в ваш реальный трафик'},
+            {icon:<img src='/illustrations/sliced/rocket.webp' alt='' loading='lazy' width={24} height={24}/>, t:'Быстрый запуск — одна кнопка START'},
+            {icon:<img src='/illustrations/sliced/ai.webp' alt='' loading='lazy' width={24} height={24}/>, t:'Много алгоритмов и автоадаптация'},
+            {icon:<img src='/illustrations/sliced/shield.webp' alt='' loading='lazy' width={24} height={24}/>, t:'Автовыбор лучшей стратегии'},
+            {icon:<img src='/illustrations/sliced/servers.webp' alt='' loading='lazy' width={24} height={24}/>, t:'Абсолютно бесплатно'},
+            {icon:<img src='/illustrations/sliced/router.webp' alt='' loading='lazy' width={24} height={24}/>, t:'Не вмешивается в ваш реальный трафик'},
           ].map((b,i)=> (
             <li key={i} className='card' style={{borderRadius:14, padding:16, display:'flex', alignItems:'center', gap:10}}>{b.icon}<span>{b.t}</span></li>
           ))}
@@ -158,10 +159,10 @@ export default function App(){
             <div className='price' style={{marginTop:10}}>₽ 0</div>
             <div className='note'>Бесплатная версия</div>
             <ul style={{listStyle:'none', padding:0, marginTop:12}}>
-              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><IconServers/>Большое кол-во сервисов</li>
-              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><IconBrain/>Автоматический поиск стратегий</li>
-              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><IconUpdate/>Автообновления</li>
-              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><IconShield/>Техподдержка 24/7</li>
+              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><img src='/illustrations/sliced/servers.webp' alt='' loading='lazy' width={20} height={20}/>Большое кол-во сервисов</li>
+              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><img src='/illustrations/sliced/ai.webp' alt='' loading='lazy' width={20} height={20}/>Автоматический поиск стратегий</li>
+              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><img src='/illustrations/sliced/update.webp' alt='' loading='lazy' width={20} height={20}/>Автообновления</li>
+              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><img src='/illustrations/sliced/shield.webp' alt='' loading='lazy' width={20} height={20}/>Техподдержка 24/7</li>
             </ul>
             <button className='btn' style={{marginTop:16, width:'100%'}} onClick={()=>window.open('https://t.me/stabilink','_blank')}>Скачать бесплатно</button>
           </div>
@@ -172,12 +173,12 @@ export default function App(){
             <div className='price' style={{marginTop:10}}>Скоро</div>
             <div className='note'>Платная версия</div>
             <ul style={{listStyle:'none', padding:0, marginTop:12}}>
-              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><IconShield/>Все преимущества BASIC</li>
-              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><IconBrain/>ИИ на борту (автоадаптация)</li>
-              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><IconServers/>Расширенное кол-во сервисов</li>
-              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><IconUpdate/>Реконнект при сбоях</li>
-              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><IconServers/>Без ограничений по сессии</li>
-              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><IconRocket/>Улучшенные стратегии</li>
+              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><img src='/illustrations/sliced/shield.webp' alt='' loading='lazy' width={20} height={20}/>Все преимущества BASIC</li>
+              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><img src='/illustrations/sliced/ai.webp' alt='' loading='lazy' width={20} height={20}/>ИИ на борту (автоадаптация)</li>
+              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><img src='/illustrations/sliced/servers.webp' alt='' loading='lazy' width={20} height={20}/>Расширенное кол-во сервисов</li>
+              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><img src='/illustrations/sliced/update.webp' alt='' loading='lazy' width={20} height={20}/>Реконнект при сбоях</li>
+              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><img src='/illustrations/sliced/servers.webp' alt='' loading='lazy' width={20} height={20}/>Без ограничений по сессии</li>
+              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><img src='/illustrations/sliced/rocket.webp' alt='' loading='lazy' width={20} height={20}/>Улучшенные стратегии</li>
             </ul>
             <button className='btn btn-disabled' style={{marginTop:16, width:'100%'}} disabled>Скоро доступно</button>
           </div>

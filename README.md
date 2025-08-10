@@ -18,3 +18,8 @@ npm run dev
 
 ## Где менять ссылки
 - Все CTA ведут на https://t.me/stabilink (ищите по проекту строку `t.me/stabilink`).
+
+
+## Иллюстрации
+- Главная: `public/illustrations/hero.png` (заменяем при необходимости своей).
+- Общий сет: `public/illustrations/set.png` (используется в «О проекте»).
