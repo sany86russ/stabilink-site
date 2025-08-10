@@ -92,7 +92,7 @@ export default function App(){
             </div>
           </div>
           <div className='card' style={{height:360, borderRadius:16, display:'grid', placeItems:'center', overflow:'hidden'}}>
-            <HeroIllustration/>
+            
           </div>
         </div>
       </section>

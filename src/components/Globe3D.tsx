@@ -57,14 +57,15 @@ function Arcs(){
     return arr
   },[])
   return <group>
-    {curves.map((pair, i)=>{
-      const mid = pair[0].clone().add(pair[1]).multiplyScalar(0.5).normalize().multiplyScalar(1.3)
-      const curve = new THREE.QuadraticBezierCurve3(pair[0], mid, pair[1])
-      const pts = curve.getPoints(40)
-      const geo = new THREE.BufferGeometry().setFromPoints(pts)
-      return <line key={i} geometry={geo} material={mat} />
-    })}
-  </group>
+      {curves.map((pair, i)=>{
+        const mid = pair[0].clone().add(pair[1]).multiplyScalar(0.5).normalize().multiplyScalar(1.3)
+        const curve = new THREE.QuadraticBezierCurve3(pair[0], mid, pair[1])
+        const pts = curve.getPoints(40)
+        const geo = new THREE.BufferGeometry().setFromPoints(pts)
+        const line = new THREE.Line(geo, mat)
+        return <primitive key={i} object={line} />
+      })}
+    </group>
 }
 
 export default function Globe3D(){
