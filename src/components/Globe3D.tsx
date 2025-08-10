@@ -16,7 +16,7 @@ function useIsMobile(){
 
 function NetSphere(){
   const geo = useMemo(()=> new THREE.SphereGeometry(1, 32, 32), [])
-  const mat = useMemo(()=> new THREE.MeshBasicMaterial({ wireframe: true, color: new THREE.Color('#39d8ff'), transparent:true, opacity:0.35 }), [])
+  const mat = useMemo(()=> new THREE.MeshBasicMaterial({ wireframe: true, color: new THREE.Color('#39d8ff'), transparent:true, opacity:0.6 }), [])
   const mesh = React.useRef<THREE.Mesh>(null!)
   useFrame((_, dt)=>{ mesh.current.rotation.y += dt * 0.1 })
   return <mesh ref={mesh} geometry={geo} material={mat} />
@@ -68,6 +68,7 @@ function Arcs(){
     </group>
 }
 
+function hasWebGL(){ try{ const c=document.createElement('canvas'); return !!(c.getContext('webgl')||c.getContext('experimental-webgl')); }catch{return false} }
 export default function Globe3D(){
   const isMobile = useIsMobile()
   return (
