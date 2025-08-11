@@ -10,6 +10,23 @@ function hasWebGL() {
   }
 }
 
+// небольшая градиентная текстура для toon-материала
+function makeToonGradient(colors: string[]) {
+  const size = colors.length;
+  const data = new Uint8Array(size * 3);
+  for (let i = 0; i < size; i++) {
+    const c = new THREE.Color(colors[i]);
+    data[i * 3 + 0] = Math.round(c.r * 255);
+    data[i * 3 + 1] = Math.round(c.g * 255);
+    data[i * 3 + 2] = Math.round(c.b * 255);
+  }
+  const tex = new THREE.DataTexture(data, size, 1, THREE.RGBFormat);
+  tex.needsUpdate = true;
+  tex.magFilter = THREE.NearestFilter;
+  tex.minFilter = THREE.NearestFilter;
+  return tex;
+}
+
 export default function NeonCore3D() {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -17,7 +34,6 @@ export default function NeonCore3D() {
     const el = ref.current;
     if (!el) return;
 
-    // fallback
     if (!hasWebGL()) {
       const c2d = document.createElement("canvas");
       c2d.width = el.clientWidth || 600;
@@ -40,89 +56,93 @@ export default function NeonCore3D() {
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
     renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
     renderer.setSize(W0, H0);
-    renderer.setClearColor(0x0a1529, 1);
+    renderer.setClearColor(0x0a1529, 0); // прозрачный, фон задаём css
     el.innerHTML = "";
     el.appendChild(renderer.domElement);
 
     // scene & camera
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(50, W0 / H0, 0.1, 100);
-    camera.position.set(0, 0, 2.9);
+    camera.position.set(0, 0, 3.3);
 
-    // lights
-    const amb = new THREE.AmbientLight(0xffffff, 0.6);
-    const dir = new THREE.DirectionalLight(0xffffff, 0.7);
+    // lights (минимум, т.к. toon-материал)
+    const dir = new THREE.DirectionalLight(0xffffff, 1.0);
     dir.position.set(3, 4, 2);
-    scene.add(amb, dir);
+    scene.add(dir);
+    scene.add(new THREE.AmbientLight(0xffffff, 0.45));
 
-    // background glow plane (very subtle)
-    const bgGeo = new THREE.PlaneGeometry(8, 4);
-    const bgMat = new THREE.MeshBasicMaterial({ color: 0x062034, transparent: true, opacity: 0.25 });
-    const bg = new THREE.Mesh(bgGeo, bgMat);
-    bg.position.set(0, 0, -2);
-    scene.add(bg);
+    // ——— PLANET (toon)
+    const gradient = makeToonGradient(["#0b3a57", "#0a79a6", "#18c9ff"]);
+    const planetMat = new THREE.MeshToonMaterial({ color: "#18c9ff", gradientMap: gradient });
+    const planetGeo = new THREE.SphereGeometry(0.95, 64, 64);
+    const planet = new THREE.Mesh(planetGeo, planetMat);
+    planet.rotation.x = 0.2;
+    scene.add(planet);
 
-    // ——— Core (torus knot)
-    const coreGeo = new THREE.TorusKnotGeometry(0.7, 0.18, 240, 36);
-    const coreMat = new THREE.MeshPhysicalMaterial({
-      roughness: 0.15,
-      metalness: 0.2,
-      transmission: 0.75,
-      thickness: 0.6,
-      color: new THREE.Color("#0cd3ff"),
-      emissive: new THREE.Color("#0cd3ff"),
-      emissiveIntensity: 0.62,
-      transparent: true,
-    });
-    const core = new THREE.Mesh(coreGeo, coreMat);
-    scene.add(core);
+    // outline (обводка) — второй меш, чуть больше, обратные стороны
+    const outlineMat = new THREE.MeshBasicMaterial({ color: "#07243a", side: THREE.BackSide });
+    const outline = new THREE.Mesh(planetGeo, outlineMat);
+    outline.scale.multiplyScalar(1.05);
+    scene.add(outline);
 
-    // ——— Orbits (lines)
-    const orbitMat = new THREE.LineBasicMaterial({ color: "#6fe3ff", transparent: true, opacity: 0.5 });
-    const orbits: THREE.Line[] = [];
-    for (let i = 0; i < 7; i++) {
-      const r = 1.25 + (i % 2) * 0.1;
-      const curve = new THREE.EllipseCurve(0, 0, r, r * 0.55, 0, Math.PI * 2, false, 0);
-      const pts2 = curve.getSpacedPoints(220).map((p) => new THREE.Vector3(p.x, 0, p.y));
+    // ——— RING (кольцо)
+    const ringGeo = new THREE.TorusGeometry(1.4, 0.06, 16, 180);
+    const ringMat = new THREE.MeshToonMaterial({ color: "#7fe6ff", gradientMap: gradient, transparent: true, opacity: 0.9 });
+    const ring = new THREE.Mesh(ringGeo, ringMat);
+    ring.rotation.x = Math.PI * 0.42;
+    ring.rotation.y = Math.PI * 0.18;
+    scene.add(ring);
+
+    // ——— SATELLITES (маленькие луны на орбитах)
+    const satGroup = new THREE.Group();
+    scene.add(satGroup);
+    const satGeo = new THREE.SphereGeometry(0.08, 16, 16);
+    const satMat = new THREE.MeshToonMaterial({ color: "#ffffff", gradientMap: gradient });
+    const SATS = 4;
+    for (let i = 0; i < SATS; i++) {
+      const s = new THREE.Mesh(satGeo, satMat);
+      const r = 1.6 + (i % 2) * 0.2;
+      // расставим на разных наклонённых орбитах
       const axis = new THREE.Vector3(Math.random(), Math.random(), Math.random()).normalize();
-      const angle = (Math.PI / 6) * (i / 2 + 0.5);
-      pts2.forEach((v) => v.applyAxisAngle(axis, angle));
-      const geo = new THREE.BufferGeometry().setFromPoints(pts2);
-      const line = new THREE.Line(geo, orbitMat);
-      scene.add(line);
-      orbits.push(line);
+      const angle = Math.PI / 6 + i * 0.3;
+      s.userData = { r, t: Math.random() * Math.PI * 2, axis, angle };
+      satGroup.add(s);
     }
 
-    // ——— Particles (small glowing nodes)
-    const pGeo = new THREE.SphereGeometry(0.02, 8, 8);
-    const pMat = new THREE.MeshBasicMaterial({ color: "#bff1ff" });
-    const particles: THREE.Mesh[] = [];
-    for (let i = 0; i < 180; i++) {
-      const v = new THREE.Vector3().randomDirection().multiplyScalar(1.35);
-      const m = new THREE.Mesh(pGeo, pMat);
-      m.position.copy(v);
-      scene.add(m);
-      particles.push(m);
+    // ——— PARTICLES (звёздочки)
+    const starGeo = new THREE.BufferGeometry();
+    const starCount = 250;
+    const positions = new Float32Array(starCount * 3);
+    for (let i = 0; i < starCount; i++) {
+      const v = new THREE.Vector3().randomDirection().multiplyScalar(2.2 + Math.random() * 0.8);
+      positions[i * 3 + 0] = v.x;
+      positions[i * 3 + 1] = v.y;
+      positions[i * 3 + 2] = v.z;
     }
+    starGeo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+    const starMat = new THREE.PointsMaterial({ color: "#bff1ff", size: 0.015, sizeAttenuation: true, transparent: true, opacity: 0.9 });
+    const stars = new THREE.Points(starGeo, starMat);
+    scene.add(stars);
 
-    // Interaction: drag to rotate (desktop), wheel to zoom; mobile — autorotate
+    // ——— Interaction: drag rotate (desktop), wheel zoom; mobile — autorotate
     let isPointerDown = false;
     let lastX = 0, lastY = 0;
-    let autoRotate = /Mobi|Android/i.test(navigator.userAgent);
-    const minZ = 2.2, maxZ = 4.5;
+    let autorotate = /Mobi|Android/i.test(navigator.userAgent);
+    const minZ = 2.4, maxZ = 5.0;
 
     const onDown = (e: PointerEvent) => { isPointerDown = true; lastX = e.clientX; lastY = e.clientY; };
     const onUp = () => { isPointerDown = false; };
     const onMove = (e: PointerEvent) => {
-      if (!isPointerDown || autoRotate) return;
+      if (!isPointerDown || autorotate) return;
       const dx = (e.clientX - lastX) * 0.006;
       const dy = (e.clientY - lastY) * 0.006;
-      core.rotation.y += dx; core.rotation.x += dy;
+      planet.rotation.y += dx; planet.rotation.x += dy;
+      ring.rotation.y += dx; ring.rotation.x += dy * 0.5;
       lastX = e.clientX; lastY = e.clientY;
     };
     const onWheel = (e: WheelEvent) => {
-      if (autoRotate) return;
-      camera.position.z = THREE.MathUtils.clamp(camera.position.z + (e.deltaY > 0 ? 0.2 : -0.2), minZ, maxZ);
+      if (autorotate) return;
+      camera.position.z = THREE.MathUtils.clamp(camera.position.z + (e.deltaY > 0 ? 0.25 : -0.25), minZ, maxZ);
     };
 
     renderer.domElement.addEventListener("pointerdown", onDown);
@@ -130,13 +150,23 @@ export default function NeonCore3D() {
     window.addEventListener("pointermove", onMove);
     renderer.domElement.addEventListener("wheel", onWheel, { passive: true });
 
+    // ——— Animate
     let t = 0, raf = 0;
     const animate = () => {
       t += 0.016;
-      // subtle motion
-      if (autoRotate) { core.rotation.y += 0.01; core.rotation.x += 0.004; }
-      orbits.forEach((o, i) => { o.rotation.y = t * (0.02 + i * 0.002); });
-      particles.forEach((p, i) => { p.rotation.y = t * 0.02; (p.material as THREE.Material).needsUpdate = false; });
+      if (autorotate) {
+        planet.rotation.y += 0.01;
+        ring.rotation.y += 0.008;
+      }
+      // движение спутников по наклонённым орбитам
+      satGroup.children.forEach((s, i) => {
+        const { r, axis, angle } = s.userData as any;
+        const tt = t * (0.6 + i * 0.15);
+        const pos = new THREE.Vector3(Math.cos(tt) * r, 0, Math.sin(tt) * r);
+        pos.applyAxisAngle(axis, angle);
+        (s as THREE.Mesh).position.copy(pos);
+      });
+      stars.rotation.y += 0.0015;
 
       renderer.render(scene, camera);
       raf = requestAnimationFrame(animate);
@@ -161,8 +191,12 @@ export default function NeonCore3D() {
       window.removeEventListener("pointermove", onMove);
       renderer.domElement.removeEventListener("wheel", onWheel);
       renderer.dispose();
-      coreGeo.dispose(); (coreMat as any).dispose?.();
-      orbitMat.dispose(); pGeo.dispose(); (pMat as any).dispose?.();
+      planetGeo.dispose();
+      ringGeo.dispose();
+      starGeo.dispose();
+      (planet.material as THREE.Material).dispose();
+      (ring.material as THREE.Material).dispose();
+      (starMat as THREE.Material).dispose?.();
       el.innerHTML = "";
     };
   }, []);
@@ -173,7 +207,7 @@ export default function NeonCore3D() {
       style={{
         width: "100%",
         height: "100%",
-        background: "radial-gradient(1200px 600px at 50% 30%, rgba(0,210,255,.08), rgba(0,0,0,0))",
+        background: "radial-gradient(1200px 600px at 50% 30%, rgba(0,210,255,.10), rgba(0,0,0,0))",
       }}
     />
   );
