@@ -101,11 +101,14 @@ const M = {
 
 
 /* Custom raster icon helper for consistent sizing */
-const RasterIcon = ({ src, alt }: { src: string; alt: string }) => (
-  <img src={src} alt={alt} className="icon-24" loading="lazy" />
-);
-
-export default function App(){
+const RasterIcon: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = ({ className = '', ...props }) => (
+  <img
+    loading="lazy"
+    draggable={false}
+    className={['icon-24', className].filter(Boolean).join(' ')}
+    {...props}
+  />
+);export default function App(){
   const title = useTypewriter('STABILINK', 85)
   const [active, setActive] = useState('about')
   const [lang, setLang] = useState<'ru'|'en'>(()=> (localStorage.getItem('lang') as any) || 'ru')
