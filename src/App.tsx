@@ -198,9 +198,9 @@ export default function App(){
           </div>
 <div className="about-image">
   <img
-    src="public/icons/man.png"
+    src="/icons/man.png"
     alt="О проекте"
-    className="about-img"
+    className="about-img fade-in"
   />
 </div>
           </div>
