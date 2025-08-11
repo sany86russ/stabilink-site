@@ -186,8 +186,14 @@ export default function App(){
 
 {/* ABOUT */}
 <Section id='about' title={M[lang].about_t}>
-  <div className="about-wrap" style={{display:'grid', gridTemplateColumns:'1.15fr .85fr', gap:28, alignItems:'center'}}>
-    {/* текст */}
+  <div className="about-wrap" style={{display:'grid', gridTemplateColumns:'0.9fr 1.1fr', gap:28, alignItems:'center'}}>
+    
+    {/* иллюстрация слева с мягким свечением */}
+    <div className="about-art">
+      <img src="/icons/man.png" alt="О проекте" className="about-img" />
+    </div>
+
+    {/* текст справа */}
     <div>
       <p style={{marginTop:0}}>{M[lang].about_p1}</p>
 
@@ -206,13 +212,11 @@ export default function App(){
         <span className="pill">Без VPN</span>
         <span className="pill">Сейчас бесплатно</span>
       </div>
-
-    {/* иллюстрация с мягким свечением */}
-    <div className="about-art">
-      <img src="/icons/man.png" alt="О проекте" className="about-img" />
     </div>
+
   </div>
 </Section>
+
 
 
       {/* ADVANTAGES */}
