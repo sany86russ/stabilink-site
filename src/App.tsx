@@ -99,6 +99,12 @@ const M = {
   }
 } as const;
 
+
+/* Custom raster icon helper for consistent sizing */
+const RasterIcon = ({ src, alt }: { src: string; alt: string }) => (
+  <img src={src} alt={alt} className="icon-24" loading="lazy" />
+);
+
 export default function App(){
   const title = useTypewriter('STABILINK', 85)
   const [active, setActive] = useState('about')
@@ -197,10 +203,10 @@ export default function App(){
         <ul style={{display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(260px,1fr))', gap:16, padding:0, listStyle:'none', margin:0}}>
           {[
             {icon:<IconRocket/>, t:'Быстрый запуск — одна кнопка START'},
-            {icon:<IconBrain/>, t:'Много алгоритмов и автоадаптация'},
-            {icon:<IconShield/>, t:'Автовыбор лучшей стратегии'},
-            {icon:<IconServers/>, t:'Абсолютно бесплатно'},
-            {icon:<IconShield/>, t:'Не вмешивается в ваш реальный трафик'},
+            {icon:<img src="/icons/dot.webp" alt="" className="bullet-dot" />, t:'Много алгоритмов и автоадаптация'},
+            {icon:__ICONSHIELD__, t:'Автовыбор лучшей стратегии'},
+            {icon:<RasterIcon src="/icons/free.webp" alt="FREE" />, t:'Абсолютно бесплатно'},
+            {icon:<RasterIcon src="/icons/best-branch.webp" alt="Best strategy" />, t:'Не вмешивается в ваш реальный трафик'},
           ].map((b,i)=> (
             <li key={i} className='card' style={{borderRadius:14, padding:16, display:'flex', alignItems:'center', gap:10}}>{b.icon}<span>{b.t}</span></li>
           ))}
@@ -241,10 +247,10 @@ export default function App(){
             <div className='price' style={{marginTop:10}}>₽ 0</div>
             <div className='note'>Бесплатная версия</div>
             <ul style={{listStyle:'none', padding:0, marginTop:12}}>
-              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><IconServers/>Большое кол-во сервисов</li>
-              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><IconBrain/>Автоматический поиск стратегий</li>
-              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><IconUpdate/>Автообновления</li>
-              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><IconShield/>Техподдержка 24/7</li>
+              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><RasterIcon src="/icons/free.webp" alt="FREE" />Большое кол-во сервисов</li>
+              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><img src="/icons/dot.webp" alt="" className="bullet-dot" />Автоматический поиск стратегий</li>
+              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><img src="/icons/dot.webp" alt="" className="bullet-dot" />Автообновления</li>
+              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><RasterIcon src="/icons/passthrough-shield.webp" alt="Passthrough shield" />Техподдержка 24/7</li>
             </ul>
             <button className='btn' style={{marginTop:16, width:'100%'}} onClick={()=>window.open('https://t.me/stabilink','_blank')}>Скачать бесплатно</button>
           </div>
@@ -255,11 +261,11 @@ export default function App(){
             <div className='price' style={{marginTop:10}}>Скоро</div>
             <div className='note'>Платная версия</div>
             <ul style={{listStyle:'none', padding:0, marginTop:12}}>
-              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><IconShield/>Все преимущества BASIC</li>
-              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><IconBrain/>ИИ на борту (автоадаптация)</li>
-              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><IconServers/>Расширенное кол-во сервисов</li>
-              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><IconUpdate/>Реконнект при сбоях</li>
-              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><IconServers/>Без ограничений по сессии</li>
+              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}>__ICONSHIELD__Все преимущества BASIC</li>
+              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><img src="/icons/dot.webp" alt="" className="bullet-dot" />ИИ на борту (автоадаптация)</li>
+              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><RasterIcon src="/icons/free.webp" alt="FREE" />Расширенное кол-во сервисов</li>
+              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><img src="/icons/dot.webp" alt="" className="bullet-dot" />Реконнект при сбоях</li>
+              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><RasterIcon src="/icons/free.webp" alt="FREE" />Без ограничений по сессии</li>
               <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><IconRocket/>Улучшенные стратегии</li>
             </ul>
             <button className='btn btn-disabled' style={{marginTop:16, width:'100%'}} disabled>Скоро доступно</button>
