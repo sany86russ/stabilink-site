@@ -46,11 +46,11 @@ const M = {
     think_p: 'Начинай скорее пользоваться интернетом как в старые добрые времена — без забот!',
     think_cta: 'Скачать сейчас',
     how_t: 'Как начать пользоваться?',
-    how_s1: '1 — Перейди в Telegram',
+    how_s1: 'Перейди в Telegram',
     how_s1d: 'Подпишись на официальный канал.',
-    how_s2: '2 — Скачай приложение',
+    how_s2: 'Скачай приложение',
     how_s2d: 'Установи StabiLink для Windows.',
-    how_s3: '3 — Нажми START',
+    how_s3: 'Нажми START',
     how_s3d: 'И пользуйся как обычно.',
     demo_t: 'Демонстрация',
     demo_p: 'Перетащи ползунок и сравни работу популярных сайтов до/после запуска приложения.',
@@ -81,11 +81,11 @@ const M = {
     think_p: 'Start using the internet like the good old days — worry-free!',
     think_cta: 'Download now',
     how_t: 'How to start?',
-    how_s1: '1 — Join Telegram',
+    how_s1: 'Join Telegram',
     how_s1d: 'Subscribe to the official channel.',
-    how_s2: '2 — Download the app',
+    how_s2: 'Download the app',
     how_s2d: 'Install StabiLink for Windows.',
-    how_s3: '3 — Press START',
+    how_s3: 'Press START',
     how_s3d: 'Use it as usual.',
     demo_t: 'Demo',
     demo_p: 'Drag the slider to compare sites before/after enabling the app.',
@@ -202,11 +202,11 @@ export default function App(){
       <Section id='advantages' title={M[lang].adv_t} alt>
         <ul style={{display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(260px,1fr))', gap:16, padding:0, listStyle:'none', margin:0}}>
           {[
-            {icon:<IconRocket/>, t:'Быстрый запуск — одна кнопка START'},
-            {icon:<img src="/icons/dot.webp" alt="" className="bullet-dot" />, t:'Много алгоритмов и автоадаптация'},
-            {icon:__ICONSHIELD__, t:'Автовыбор лучшей стратегии'},
+            {icon:<RasterIcon src="/icons/start.webp" alt="START" />, t:'Быстрый запуск — одна кнопка START'},
+            {icon:<RasterIcon src="/icons/ai.webp" alt="AI" />, t:\'Много алгоритмов и автоадаптация\'},
+            {icon:<RasterIcon src="/icons/best-branch.webp" alt="Best path" />, t:\'Автовыбор лучшей стратегии\'},
             {icon:<RasterIcon src="/icons/free.webp" alt="FREE" />, t:'Абсолютно бесплатно'},
-            {icon:<RasterIcon src="/icons/best-branch.webp" alt="Best strategy" />, t:'Не вмешивается в ваш реальный трафик'},
+            {icon:<RasterIcon src="/icons/passthrough-shield.webp" alt="Passthrough shield" />, t:\'Не вмешивается в ваш реальный трафик\'},
           ].map((b,i)=> (
             <li key={i} className='card' style={{borderRadius:14, padding:16, display:'flex', alignItems:'center', gap:10}}>{b.icon}<span>{b.t}</span></li>
           ))}
@@ -224,9 +224,9 @@ export default function App(){
       {/* HOW TO */}
       <Section id='how' title={M[lang].how_t} alt>
         <ol style={{display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(220px,1fr))', gap:16}}>
-          <li className='card' style={{borderRadius:14, padding:16}}><b>{M[lang].how_s1}</b><br/>{M[lang].how_s1d}</li>
-          <li className='card' style={{borderRadius:14, padding:16}}><b>{M[lang].how_s2}</b><br/>{M[lang].how_s2d}</li>
-          <li className='card' style={{borderRadius:14, padding:16}}><b>{M[lang].how_s3}</b><br/>{M[lang].how_s3d}</li>
+          <li className='card' style={{borderRadius:14, padding:16}}><span className=\"step-badge\">1</span><b>{M[lang].how_s1}</b><br/>{M[lang].how_s1d}</li>
+          <li className='card' style={{borderRadius:14, padding:16}}><span className=\"step-badge\">2</span><b>{M[lang].how_s2}</b><br/>{M[lang].how_s2d}</li>
+          <li className='card' style={{borderRadius:14, padding:16}}><span className=\"step-badge\">3</span><b>{M[lang].how_s3}</b><br/>{M[lang].how_s3d}</li>
         </ol>
       </Section>
 
@@ -261,12 +261,12 @@ export default function App(){
             <div className='price' style={{marginTop:10}}>Скоро</div>
             <div className='note'>Платная версия</div>
             <ul style={{listStyle:'none', padding:0, marginTop:12}}>
-              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}>__ICONSHIELD__Все преимущества BASIC</li>
+              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><img src="/icons/dot.webp" className="bullet-dot" alt="" />Все преимущества BASIC</li>
               <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><img src="/icons/dot.webp" alt="" className="bullet-dot" />ИИ на борту (автоадаптация)</li>
               <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><RasterIcon src="/icons/free.webp" alt="FREE" />Расширенное кол-во сервисов</li>
               <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><img src="/icons/dot.webp" alt="" className="bullet-dot" />Реконнект при сбоях</li>
               <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><RasterIcon src="/icons/free.webp" alt="FREE" />Без ограничений по сессии</li>
-              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><IconRocket/>Улучшенные стратегии</li>
+              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><RasterIcon src="/icons/start.webp" alt="START" />Улучшенные стратегии</li>
             </ul>
             <button className='btn btn-disabled' style={{marginTop:16, width:'100%'}} disabled>Скоро доступно</button>
           </div>
