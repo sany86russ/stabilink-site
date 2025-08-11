@@ -168,9 +168,10 @@ export default function App(){
             </div>
           </div>
 
-<div style={{ height: 360, display: 'grid' }}>
-  <NeonCore3D />
-</div>
+    <div style={{ height: 360, display: 'grid' }}>
+      <NeonCore3D />
+    </div>
+  </div> {/* ← закрыли grid */}
       </section>
 
       {/* ABOUT */}
