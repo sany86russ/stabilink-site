@@ -185,17 +185,18 @@ export default function App(){
       </section>
 
 {/* ABOUT */}
-<Section id='about' title={M[lang].about_t}>
+<Section id='about'>
   <div className="about-wrap" style={{display:'grid', gridTemplateColumns:'0.9fr 1.1fr', gap:28, alignItems:'center'}}>
     
-    {/* иллюстрация слева с мягким свечением */}
+    {/* иллюстрация слева */}
     <div className="about-art">
       <img src="/icons/man.png" alt="О проекте" className="about-img" />
     </div>
 
-    {/* текст справа */}
+    {/* текст + заголовок справа */}
     <div>
-      <p style={{marginTop:0}}>{M[lang].about_p1}</p>
+      <h2 style={{marginTop:0}}>{M[lang].about_t}</h2>
+      <p>{M[lang].about_p1}</p>
 
       {/* аккуратный чек-лист */}
       <ul className="about-list" style={{marginTop:12}}>
@@ -216,6 +217,7 @@ export default function App(){
 
   </div>
 </Section>
+
 
 
 
