@@ -185,27 +185,28 @@ export default function App(){
       </section>
 
       {/* ABOUT */}
-      <Section id='about' title={M[lang].about_t}>
-        <div style={{display:'grid', gridTemplateColumns:'1.1fr .9fr', gap:20, alignItems:'center'}}>
-          <div>
-            <p>{M[lang].about_p1}</p>
-            <ul style={{marginTop:12, lineHeight:1.8}}>
-              <li>{M[lang].about_l1}</li>
-              <li>{M[lang].about_l2}</li>
-              <li>{M[lang].about_l3}</li>
-            </ul>
-            <p style={{marginTop:12}}>{M[lang].about_p2}</p>
-          </div>
-<div className="about-image">
-  <img
-    src="/icons/man.png"
-    alt="О проекте"
-    className="about-img fade-in"
-  />
-</div>
-          </div>
-        </div>
-      </Section>
+<Section id='about' title={M[lang].about_t}>
+  <div style={{display:'grid', gridTemplateColumns:'1.1fr .9fr', gap:20, alignItems:'center'}}>
+    <div>
+      <p>{M[lang].about_p1}</p>
+      <ul style={{marginTop:12, lineHeight:1.8}}>
+        <li>{M[lang].about_l1}</li>
+        <li>{M[lang].about_l2}</li>
+        <li>{M[lang].about_l3}</li>
+      </ul>
+      <p style={{marginTop:12}}>{M[lang].about_p2}</p>
+    </div>
+
+    {/* Иллюстрация без фона */}
+    <div className="about-image" style={{justifySelf:'center'}}>
+      <img
+        src="/icons/man.png"
+        alt="О проекте"
+        className="about-img fade-in"
+      />
+    </div>
+  </div>
+</Section>
 
       {/* ADVANTAGES */}
       <Section id='advantages' title={M[lang].adv_t} alt>
