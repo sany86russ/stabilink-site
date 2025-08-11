@@ -14,12 +14,12 @@ function useTypewriter(text: string, speed = 90){
   return out
 }
 
-function Section({ id, title, children, alt }: {id?:string, title:string, children:React.ReactNode, alt?:boolean}){
+function Section({ id, title, children, alt }: {id?:string, title?:string, children:React.ReactNode, alt?:boolean}){
   return (
     <section id={id} data-reveal style={{position:'relative', padding:'64px 0', background: alt?'rgba(10,16,33,0.7)':'rgba(8,13,26,0.7)', borderTop:'1px solid rgba(255,255,255,.06)', zIndex:2}}>
       <div style={{maxWidth:1100, margin:'0 auto', padding:'0 20px', position:'relative'}}>
-        <h2 className='h2' style={{margin:0}}>{title}</h2>
-        <div style={{marginTop:16, color:'#a9b7d0', lineHeight:1.7}}>{children}</div>
+        {title && <h2 className='h2' style={{margin:0}}>{title}</h2>}
+        <div style={{marginTop: title ? 16 : 0, color:'#a9b7d0', lineHeight:1.7}}>{children}</div>
       </div>
     </section>
   )
@@ -185,20 +185,26 @@ export default function App(){
       </section>
 
 {/* ABOUT */}
-<Section id='about'>
-  <div className="about-wrap" style={{display:'grid', gridTemplateColumns:'0.9fr 1.1fr', gap:28, alignItems:'center'}}>
-    
-    {/* иллюстрация слева */}
-    <div className="about-art">
+<Section id="about">
+  <div
+    className="about-wrap"
+    style={{
+      display:'grid',
+      gridTemplateColumns:'0.9fr 1.1fr',
+      gap:28,
+      alignItems:'center'
+    }}
+  >
+    {/* Иллюстрация слева */}
+    <div className="about-art" style={{display:'grid', placeItems:'center'}}>
       <img src="/icons/man.png" alt="О проекте" className="about-img" />
     </div>
 
-    {/* текст + заголовок справа */}
+    {/* Заголовок + текст справа */}
     <div>
-      <h2 style={{marginTop:0}}>{M[lang].about_t}</h2>
-      <p>{M[lang].about_p1}</p>
+      <h2 className="h2" style={{margin:'0 0 12px'}}>{M[lang].about_t}</h2>
+      <p style={{marginTop:0}}>{M[lang].about_p1}</p>
 
-      {/* аккуратный чек-лист */}
       <ul className="about-list" style={{marginTop:12}}>
         <li>{M[lang].about_l1}</li>
         <li>{M[lang].about_l2}</li>
@@ -207,14 +213,12 @@ export default function App(){
 
       <p style={{marginTop:12}}>{M[lang].about_p2}</p>
 
-      {/* значки-бейджи под текстом */}
-      <div className="about-badges">
+      <div className="about-badges" style={{marginTop:14, display:'flex', gap:8, flexWrap:'wrap'}}>
         <span className="pill">Windows 7–11</span>
         <span className="pill">Без VPN</span>
         <span className="pill">Сейчас бесплатно</span>
       </div>
     </div>
-
   </div>
 </Section>
 
