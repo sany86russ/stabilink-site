@@ -168,10 +168,9 @@ export default function App(){
             </div>
           </div>
 
-<motion.div className='card' style={{height:360, borderRadius:16, display:'grid', overflow:'hidden'}}>
+<div style={{ height: 360, display: 'grid' }}>
   <NeonCore3D />
-</motion.div>
-        </div>
+</div>
       </section>
 
       {/* ABOUT */}
