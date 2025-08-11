@@ -4,6 +4,7 @@ import BackgroundFX from './components/BackgroundFX'
 import CompareSlider from './components/CompareSlider'
 import { GlobeIllustration, IconRocket, IconBrain, IconShield, IconServers, IconUpdate } from './components/Illustrations'
 import NeonCore3D from './components/NeonCore3D'
+import NeonCore3D from './src/components/NeonCore3D'
 
 function useTypewriter(text: string, speed = 90){
   const [out, setOut] = useState('')
@@ -168,10 +169,17 @@ export default function App(){
             </div>
           </div>
 
-          <motion.div initial={{opacity:0, y:12}} whileInView={{opacity:1, y:0}} viewport={{once:true}} transition={{duration:.6}}
-            className='card' style={{height:360, borderRadius:16, display:'grid', overflow:'hidden'}}>
-            <NeonCore3D/>
-          </motion.div>
+<motion.div
+  initial={{opacity:0, y:12}}
+  whileInView={{opacity:1, y:0}}
+  viewport={{once:true}}
+  transition={{duration:.6}}
+  className='card'
+  style={{height:360, borderRadius:16, display:'grid', overflow:'hidden'}}
+>
+  <div style={{position:'absolute',top:8,right:12,fontSize:12,color:'#9bdfff'}}>HERO MOUNT</div>
+  <NeonCore3D />
+</motion.div>
         </div>
       </section>
 
