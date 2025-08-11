@@ -24,7 +24,7 @@ function Section({ id, title, children, alt }: {id?:string, title:string, childr
     </section>
   )
 }
-
+ 
 /** i18n */
 const M = {
   ru: {
