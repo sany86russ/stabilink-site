@@ -207,13 +207,6 @@ export default function App(){
         <span className="pill">Сейчас бесплатно</span>
       </div>
 
-      {/* мини-CTA внутри блока */}
-      <div className="about-cta">
-        <button className="btn" onClick={()=>window.open('https://t.me/stabilink','_blank')}>Скачать для Windows</button>
-        <button className="btn-ghost" onClick={()=>document.getElementById('advantages')?.scrollIntoView({behavior:'smooth'})}>Преимущества</button>
-      </div>
-    </div>
-
     {/* иллюстрация с мягким свечением */}
     <div className="about-art">
       <img src="/icons/man.png" alt="О проекте" className="about-img" />
