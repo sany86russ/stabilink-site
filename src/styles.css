@@ -125,6 +125,20 @@ li .bullet-dot{ display:flex; align-items:center; gap:8px; font-size:15px; line-
   filter: drop-shadow(0 0 15px rgba(0,255,255,0.3));
   transition: transform 0.3s ease, filter 0.3s ease;
 }
+.about-img {
+  max-width: 380px;
+  width: 100%;
+  height: auto;
+  border-radius: 0;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  animation: floatImage 6s ease-in-out infinite;
+}
+
+@keyframes floatImage {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
 
 .about-image:hover {
   transform: scale(1.05);
