@@ -184,29 +184,43 @@ export default function App(){
         </div>
       </section>
 
-      {/* ABOUT */}
+{/* ABOUT */}
 <Section id='about' title={M[lang].about_t}>
-  <div style={{display:'grid', gridTemplateColumns:'1.1fr .9fr', gap:20, alignItems:'center'}}>
+  <div className="about-wrap" style={{display:'grid', gridTemplateColumns:'1.15fr .85fr', gap:28, alignItems:'center'}}>
+    {/* текст */}
     <div>
-      <p>{M[lang].about_p1}</p>
-      <ul style={{marginTop:12, lineHeight:1.8}}>
+      <p style={{marginTop:0}}>{M[lang].about_p1}</p>
+
+      {/* аккуратный чек-лист */}
+      <ul className="about-list" style={{marginTop:12}}>
         <li>{M[lang].about_l1}</li>
         <li>{M[lang].about_l2}</li>
         <li>{M[lang].about_l3}</li>
       </ul>
+
       <p style={{marginTop:12}}>{M[lang].about_p2}</p>
+
+      {/* значки-бейджи под текстом */}
+      <div className="about-badges">
+        <span className="pill">Windows 7–11</span>
+        <span className="pill">Без VPN</span>
+        <span className="pill">Сейчас бесплатно</span>
+      </div>
+
+      {/* мини-CTA внутри блока */}
+      <div className="about-cta">
+        <button className="btn" onClick={()=>window.open('https://t.me/stabilink','_blank')}>Скачать для Windows</button>
+        <button className="btn-ghost" onClick={()=>document.getElementById('advantages')?.scrollIntoView({behavior:'smooth'})}>Преимущества</button>
+      </div>
     </div>
 
-    {/* Иллюстрация без фона */}
-    <div className="about-image" style={{justifySelf:'center'}}>
-      <img
-        src="/icons/man.png"
-        alt="О проекте"
-        className="about-img fade-in"
-      />
+    {/* иллюстрация с мягким свечением */}
+    <div className="about-art">
+      <img src="/icons/man.png" alt="О проекте" className="about-img" />
     </div>
   </div>
 </Section>
+
 
       {/* ADVANTAGES */}
       <Section id='advantages' title={M[lang].adv_t} alt>
