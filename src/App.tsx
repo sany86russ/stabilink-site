@@ -196,8 +196,13 @@ export default function App(){
             </ul>
             <p style={{marginTop:12}}>{M[lang].about_p2}</p>
           </div>
-          <div className='card' style={{height:260, borderRadius:16, display:'grid', placeItems:'center'}}>
-            <GlobeIllustration/>
+<div className="about-image">
+  <img
+    src="/icons/man.png"
+    alt="О проекте"
+    className="about-img"
+  />
+</div>
           </div>
         </div>
       </Section>
