@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import BackgroundFX from './components/BackgroundFX'
 import CompareSlider from './components/CompareSlider'
-// We only keep the icon that is actually used below to avoid typecheck warnings
-import { IconRocket } from './components/Illustrations'
+import { GlobeIllustration } from './components/Illustrations'
 import NeonCore3D from './components/NeonCore3D'
 
 function useTypewriter(text: string, speed = 90){
@@ -47,11 +46,11 @@ const M = {
     think_p: 'Начинай скорее пользоваться интернетом как в старые добрые времена — без забот!',
     think_cta: 'Скачать сейчас',
     how_t: 'Как начать пользоваться?',
-    how_s1: '1 — Перейди в Telegram',
+    how_s1: 'Перейди в Telegram',
     how_s1d: 'Подпишись на официальный канал.',
-    how_s2: '2 — Скачай приложение',
+    how_s2: 'Скачай приложение',
     how_s2d: 'Установи StabiLink для Windows.',
-    how_s3: '3 — Нажми START',
+    how_s3: 'Нажми START',
     how_s3d: 'И пользуйся как обычно.',
     demo_t: 'Демонстрация',
     demo_p: 'Перетащи ползунок и сравни работу популярных сайтов до/после запуска приложения.',
@@ -82,11 +81,11 @@ const M = {
     think_p: 'Start using the internet like the good old days — worry-free!',
     think_cta: 'Download now',
     how_t: 'How to start?',
-    how_s1: '1 — Join Telegram',
+    how_s1: 'Join Telegram',
     how_s1d: 'Subscribe to the official channel.',
-    how_s2: '2 — Download the app',
+    how_s2: 'Download the app',
     how_s2d: 'Install StabiLink for Windows.',
-    how_s3: '3 — Press START',
+    how_s3: 'Press START',
     how_s3d: 'Use it as usual.',
     demo_t: 'Demo',
     demo_p: 'Drag the slider to compare sites before/after enabling the app.',
@@ -100,16 +99,17 @@ const M = {
   }
 } as const;
 
-
-/* Custom raster icon helper for consistent sizing */
+/* Helper for consistent raster icon sizing */
 const RasterIcon: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = ({ className = '', ...props }) => (
   <img
     loading="lazy"
     draggable={false}
-    className={['icon-24', className].filter(Boolean).join(' ')}
+    className={['icon-32', className].filter(Boolean).join(' ')}
     {...props}
   />
-);export default function App(){
+);
+
+export default function App(){
   const title = useTypewriter('STABILINK', 85)
   const [active, setActive] = useState('about')
   const [lang, setLang] = useState<'ru'|'en'>(()=> (localStorage.getItem('lang') as any) || 'ru')
@@ -178,10 +178,10 @@ const RasterIcon: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = ({ class
             </div>
           </div>
 
-    <div style={{ height: 360, display: 'grid' }}>
-      <NeonCore3D />
-    </div>
-  </div> {/* ← закрыли grid */}
+          <div style={{ height: 360, display: 'grid' }}>
+            <NeonCore3D />
+          </div>
+        </div>
       </section>
 
       {/* ABOUT */}
@@ -189,15 +189,15 @@ const RasterIcon: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = ({ class
         <div style={{display:'grid', gridTemplateColumns:'1.1fr .9fr', gap:20, alignItems:'center'}}>
           <div>
             <p>{M[lang].about_p1}</p>
-            <ul className="about-list" style={{marginTop:12, lineHeight:1.8}}>
+            <ul style={{marginTop:12, lineHeight:1.8}}>
               <li>{M[lang].about_l1}</li>
               <li>{M[lang].about_l2}</li>
               <li>{M[lang].about_l3}</li>
             </ul>
             <p style={{marginTop:12}}>{M[lang].about_p2}</p>
           </div>
-          <div className='about-illustration'>
-            <img src="/icons/man.png" alt="StabiLink user" className="about-man" loading="lazy"/>
+          <div className='card' style={{height:260, borderRadius:16, display:'grid', placeItems:'center'}}>
+            <GlobeIllustration/>
           </div>
         </div>
       </Section>
@@ -206,13 +206,16 @@ const RasterIcon: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = ({ class
       <Section id='advantages' title={M[lang].adv_t} alt>
         <ul className="features-grid" style={{display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(260px,1fr))', gap:16, padding:0, listStyle:'none', margin:0}}>
           {[
-            {icon:<RasterIcon className="icon-32" src="/icons/start.png" alt="START" />, t:'Быстрый запуск — одна кнопка START'},
-            {icon:<RasterIcon className="icon-32" src="/icons/brain.png" alt="AI Brain" />, t:'Много алгоритмов и автоадаптация'},
-            {icon:<RasterIcon className="icon-32" src="/icons/wand.png" alt="Best choice" />, t:'Автовыбор лучшей стратегии'},
-            {icon:<RasterIcon className="icon-32" src="/icons/free.png" alt="FREE" />, t:'Абсолютно бесплатно'},
-            {icon:<RasterIcon className="icon-32" src="/icons/shield.png" alt="Passthrough shield" />, t:'Не вмешивается в ваш реальный трафик'},
+            {icon:<RasterIcon src="/icons/start.png" alt="START" />, t:'Быстрый запуск — одна кнопка START'},
+            {icon:<RasterIcon src="/icons/brain.png" alt="AI Brain" />, t:'Много алгоритмов и автоадаптация'},
+            {icon:<RasterIcon src="/icons/wand.png" alt="Best path" />, t:'Автовыбор лучшей стратегии'},
+            {icon:<RasterIcon src="/icons/free.png" alt="FREE" />, t:'Абсолютно бесплатно'},
+            {icon:<RasterIcon src="/icons/shield.png" alt="Passthrough shield" />, t:'Не вмешивается в ваш реальный трафик'},
           ].map((b,i)=> (
-            <li key={i} className='card' style={{borderRadius:14, padding:16, display:'flex', alignItems:'center', gap:12}}>{b.icon}<span>{b.t}</span></li>
+            <li key={i} className='card' style={{borderRadius:14, padding:16, display:'flex', alignItems:'center', gap:12}}>
+              {b.icon}
+              <span>{b.t}</span>
+            </li>
           ))}
         </ul>
       </Section>
@@ -227,24 +230,30 @@ const RasterIcon: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = ({ class
 
       {/* HOW TO */}
       <Section id='how' title={M[lang].how_t} alt>
-  <ol className="steps" style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(260px,1fr))', gap:12 }}>
-    <li className="card" style={{ borderRadius:16, padding:'16px 18px' }}>
-      <span className="step-badge">1</span>
-      <b>{M[lang].how_s1}</b><br/>
-      Нет сложных настроек в браузере
-    </li>
-    <li className="card" style={{ borderRadius:16, padding:'16px 18px' }}>
-      <span className="step-badge">2</span>
-      <b>{M[lang].how_s2}</b><br/>
-      Выбираете режим, запускаете — и всё!
-    </li>
-    <li className="card" style={{ borderRadius:16, padding:'16px 18px' }}>
-      <span className="step-badge">3</span>
-      <b>{M[lang].how_s3}</b><br/>
-      Откроется удобная веб‑панель с подсказками
-    </li>
-  </ol>
-</Section>
+        <ol className="steps" style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(260px,1fr))', gap:12, padding:0, listStyle:'none' }}>
+          <li className="card step" style={{ borderRadius:16, padding:'16px 18px' }}>
+            <span className="step-badge">1</span>
+            <div>
+              <b>{M[lang].how_s1}</b><br/>
+              <span style={{opacity:.9}}>{M[lang].how_s1d}</span>
+            </div>
+          </li>
+          <li className="card step" style={{ borderRadius:16, padding:'16px 18px' }}>
+            <span className="step-badge">2</span>
+            <div>
+              <b>{M[lang].how_s2}</b><br/>
+              <span style={{opacity:.9}}>{M[lang].how_s2d}</span>
+            </div>
+          </li>
+          <li className="card step" style={{ borderRadius:16, padding:'16px 18px' }}>
+            <span className="step-badge">3</span>
+            <div>
+              <b>{M[lang].how_s3}</b><br/>
+              <span style={{opacity:.9}}>{M[lang].how_s3d}</span>
+            </div>
+          </li>
+        </ol>
+      </Section>
 
       {/* DEMO */}
       <Section title={M[lang].demo_t}>
@@ -254,7 +263,7 @@ const RasterIcon: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = ({ class
 
       {/* PRICING */}
       <Section id='pricing' title={M[lang].pricing_t} >
-        <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))', gap:16}}>
+        <div className="pricing" style={{display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))', gap:16}}>
           <div className='card' style={{borderRadius:16, padding:20}}>
             <div style={{display:'flex', alignItems:'center', justifyContent:'space-between'}}>
               <h3 className='h3' style={{margin:0}}>BASIC</h3>
@@ -263,10 +272,10 @@ const RasterIcon: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = ({ class
             <div className='price' style={{marginTop:10}}>₽ 0</div>
             <div className='note'>Бесплатная версия</div>
             <ul style={{listStyle:'none', padding:0, marginTop:12}}>
-              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><span className="dot"></span>Большое кол-во сервисов</li>
-              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><span className="dot"></span>Автоматический поиск стратегий</li>
-              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><span className="dot"></span>Автообновления</li>
-              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><span className="dot"></span>Техподдержка 24/7</li>
+              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><span className="dot" />Большое кол-во сервисов</li>
+              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><span className="dot" />Автоматический поиск стратегий</li>
+              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><span className="dot" />Автообновления</li>
+              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><span className="dot" />Техподдержка 24/7</li>
             </ul>
             <button className='btn' style={{marginTop:16, width:'100%'}} onClick={()=>window.open('https://t.me/stabilink','_blank')}>Скачать бесплатно</button>
           </div>
@@ -277,12 +286,12 @@ const RasterIcon: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = ({ class
             <div className='price' style={{marginTop:10}}>Скоро</div>
             <div className='note'>Платная версия</div>
             <ul style={{listStyle:'none', padding:0, marginTop:12}}>
-              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><span className="dot"></span>Все преимущества BASIC</li>
-              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><span className="dot"></span>ИИ на борту (автоадаптация)</li>
-              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><span className="dot"></span>Расширенное кол-во сервисов</li>
-              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><span className="dot"></span>Реконнект при сбоях</li>
-              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><span className="dot"></span>Без ограничений по сессии</li>
-              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><IconRocket/>Улучшенные стратегии</li>
+              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><span className="dot" />Все преимущества BASIC</li>
+              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><span className="dot" />ИИ на борту (автоадаптация)</li>
+              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><span className="dot" />Расширенное кол-во сервисов</li>
+              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><span className="dot" />Реконнект при сбоях</li>
+              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><span className="dot" />Без ограничений по сессии</li>
+              <li style={{display:'flex', alignItems:'center', gap:10, marginTop:10}}><span className="dot" />Улучшенные стратегии</li>
             </ul>
             <button className='btn btn-disabled' style={{marginTop:16, width:'100%'}} disabled>Скоро доступно</button>
           </div>
