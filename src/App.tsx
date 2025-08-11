@@ -1,9 +1,9 @@
-
 import React, { useEffect, useState } from 'react'
+import { motion } from 'framer-motion'
 import BackgroundFX from './components/BackgroundFX'
 import CompareSlider from './components/CompareSlider'
 import { GlobeIllustration, IconRocket, IconBrain, IconShield, IconServers, IconUpdate } from './components/Illustrations'
-import Globe3D from './components/Globe3D'
+import NeonCore3D from './components/NeonCore3D'
 
 function useTypewriter(text: string, speed = 90){
   const [out, setOut] = useState('')
@@ -25,9 +25,85 @@ function Section({ id, title, children, alt }: {id?:string, title:string, childr
   )
 }
 
+/** i18n */
+const M = {
+  ru: {
+    nav: { about: 'О проекте', advantages: 'Преимущества', how: 'Как пользоваться', pricing: 'Прайс', faq: 'FAQ' },
+    hero_sub: 'стабильный доступ в интернет без ограничений!',
+    free_now: 'Проект сейчас ',
+    free: 'бесплатный',
+    cta_download: 'Скачать для Windows',
+    cta_benefits: 'Преимущества',
+    badges: ['Discord','Telegram Web','YouTube'],
+    about_t: 'О проекте',
+    about_p1: 'StabiLink — настольное приложение для Windows, которое помогает обеспечить стабильную работу популярных онлайн-сервисов при проблемах с доступом. Вы запускаете программу, нажимаете START, а дальше система автоматически подбирает оптимальные параметры подключения под вашего провайдера и ОС.',
+    about_l1: 'Поддерживаются мессенджеры, видеоплатформы и стрим-сервисы (полный список — внутри приложения).',
+    about_l2: 'Алгоритмы адаптируются под сетевые условия — никаких сложных настроек.',
+    about_l3: 'Коммуникация юридически нейтральна: мы не популяризируем способы доступа к ресурсам с ограничениями и не рекламируем VPN.',
+    about_p2: 'Если у вас были сложности с доступом к сервисам вроде Discord, Telegram Web или YouTube, StabiLink стремится вернуть комфорт пользования и стабильность соединения, соблюдая требования законодательства РФ.',
+    adv_t: 'Преимущества',
+    think_t: 'Ты всё ещё думаешь?',
+    think_p: 'Начинай скорее пользоваться интернетом как в старые добрые времена — без забот!',
+    think_cta: 'Скачать сейчас',
+    how_t: 'Как начать пользоваться?',
+    how_s1: '1 — Перейди в Telegram',
+    how_s1d: 'Подпишись на официальный канал.',
+    how_s2: '2 — Скачай приложение',
+    how_s2d: 'Установи StabiLink для Windows.',
+    how_s3: '3 — Нажми START',
+    how_s3d: 'И пользуйся как обычно.',
+    demo_t: 'Демонстрация',
+    demo_p: 'Перетащи ползунок и сравни работу популярных сайтов до/после запуска приложения.',
+    pricing_t: 'Прайс',
+    faq_t: 'FAQ',
+    contacts_t: 'Контакты',
+    contacts_p: 'Официальный канал с новостями и ссылками на загрузку.',
+    open_tg: 'Открыть Telegram',
+    footer_rights: 'Все права защищены.',
+    privacy: 'Политика конфиденциальности'
+  },
+  en: {
+    nav: { about: 'About', advantages: 'Benefits', how: 'How to use', pricing: 'Pricing', faq: 'FAQ' },
+    hero_sub: 'stable access to the internet without limits!',
+    free_now: 'The project is currently ',
+    free: 'free',
+    cta_download: 'Download for Windows',
+    cta_benefits: 'See benefits',
+    badges: ['Discord','Telegram Web','YouTube'],
+    about_t: 'About',
+    about_p1: 'StabiLink is a Windows desktop app that keeps popular online services stable when access is problematic. Launch the app, press START — the system auto-tunes connection parameters for your ISP and OS.',
+    about_l1: 'Supports messengers, video platforms and streaming (full list inside the app).',
+    about_l2: 'Algorithms adapt to network conditions — no complex setup.',
+    about_l3: 'Communication is legally neutral: we do not promote methods of accessing restricted resources and do not advertise VPN.',
+    about_p2: 'If you had issues reaching services like Discord, Telegram Web or YouTube, StabiLink aims to restore comfortable usage and connection stability while complying with local law.',
+    adv_t: 'Benefits',
+    think_t: 'Still thinking?',
+    think_p: 'Start using the internet like the good old days — worry-free!',
+    think_cta: 'Download now',
+    how_t: 'How to start?',
+    how_s1: '1 — Join Telegram',
+    how_s1d: 'Subscribe to the official channel.',
+    how_s2: '2 — Download the app',
+    how_s2d: 'Install StabiLink for Windows.',
+    how_s3: '3 — Press START',
+    how_s3d: 'Use it as usual.',
+    demo_t: 'Demo',
+    demo_p: 'Drag the slider to compare sites before/after enabling the app.',
+    pricing_t: 'Pricing',
+    faq_t: 'FAQ',
+    contacts_t: 'Contacts',
+    contacts_p: 'Official channel with news and download links.',
+    open_tg: 'Open Telegram',
+    footer_rights: 'All rights reserved.',
+    privacy: 'Privacy policy'
+  }
+} as const;
+
 export default function App(){
   const title = useTypewriter('STABILINK', 85)
   const [active, setActive] = useState('about')
+  const [lang, setLang] = useState<'ru'|'en'>(()=> (localStorage.getItem('lang') as any) || 'ru')
+  useEffect(()=>{ localStorage.setItem('lang', lang) }, [lang])
 
   useEffect(()=>{
     const io = new IntersectionObserver((entries)=>{
@@ -51,6 +127,7 @@ export default function App(){
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous"/>
       <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet"/>
 
+      {/* NAV */}
       <header style={{position:'sticky', top:0, zIndex:3, background:'rgba(7,11,21,.65)', backdropFilter:'blur(8px)', borderBottom:'1px solid rgba(255,255,255,.08)'}}>
         <div style={{maxWidth:1100, margin:'0 auto', padding:'12px 20px', display:'flex', alignItems:'center', justifyContent:'space-between'}}>
           <div style={{display:'flex', alignItems:'center', gap:10}}>
@@ -59,54 +136,63 @@ export default function App(){
           </div>
           <nav className='navbar' style={{display:'flex', alignItems:'center', gap:14, fontWeight:600, fontSize:14}}>
             {[
-              {id:'about', label:'О проекте'},
-              {id:'advantages', label:'Преимущества'},
-              {id:'how', label:'Как пользоваться'},
-              {id:'pricing', label:'Прайс'},
-              {id:'faq', label:'FAQ'},
+              {id:'about', label:M[lang].nav.about},
+              {id:'advantages', label:M[lang].nav.advantages},
+              {id:'how', label:M[lang].nav.how},
+              {id:'pricing', label:M[lang].nav.pricing},
+              {id:'faq', label:M[lang].nav.faq},
             ].map(i=> (<a key={i.id} href={`#${i.id}`} className={active===i.id? 'active':''}>{i.label}</a>))}
           </nav>
-          <div>
-            <button onClick={()=>document.getElementById('contacts')?.scrollIntoView({behavior:'smooth'})} className='btn btn-ghost' style={{marginRight:12}}>Telegram</button>
+          <div style={{display:'flex', alignItems:'center', gap:12}}>
+            <button className='btn-ghost' style={{padding:'8px 10px', borderRadius:8}} onClick={()=>setLang(lang==='ru'?'en':'ru')}>{lang.toUpperCase()}</button>
             <button onClick={()=>window.open('https://t.me/stabilink','_blank')} className='btn'>Скачать</button>
           </div>
         </div>
       </header>
 
+      {/* HERO */}
       <section data-reveal style={{position:'relative', padding:'90px 0 56px', borderBottom:'1px solid rgba(255,255,255,.08)', zIndex:2}}>
         <div style={{maxWidth:1100, margin:'0 auto', padding:'0 20px', display:'grid', gridTemplateColumns:'1.1fr .9fr', gap:24}}>
           <div>
-            <h1 className='h1' style={{margin:'0 0 12px'}}>
+            <motion.h1 initial={{opacity:0, y:8}} animate={{opacity:1, y:0}} transition={{duration:.6}} className='h1' style={{margin:'0 0 12px'}}>
               <span style={{display:'block'}}>{title}<span style={{color:'#6fe3ff'}}>|</span></span>
-              <span style={{display:'block', color:'#e6f0ff', fontFamily:'Inter'}}>стабильный доступ в интернет без ограничений!</span>
-            </h1>
-            <p style={{margin:'8px 0 0', maxWidth:640}}>Проект сейчас <b style={{color:'#75e7ff'}}>бесплатный</b>. Скачивайте и начинайте пользоваться за пару кликов.</p>
+              <span style={{display:'block', color:'#e6f0ff', fontFamily:'Inter'}}>{M[lang].hero_sub}</span>
+            </motion.h1>
+            <p style={{margin:'8px 0 0', maxWidth:640}}>{M[lang].free_now}<b style={{color:'#75e7ff'}}>{M[lang].free}</b>.</p>
             <div style={{marginTop:18}}>
-              <button className='btn' onClick={()=>window.open('https://t.me/stabilink','_blank')}>Скачать для Windows</button>
-              <button className='btn btn-ghost' onClick={()=>document.getElementById('advantages')?.scrollIntoView({behavior:'smooth'})}>Преимущества</button>
+              <button className='btn' onClick={()=>window.open('https://t.me/stabilink','_blank')}>{M[lang].cta_download}</button>
+              <button className='btn btn-ghost' onClick={()=>document.getElementById('advantages')?.scrollIntoView({behavior:'smooth'})}>{M[lang].cta_benefits}</button>
             </div>
             <div style={{marginTop:16, display:'flex', gap:10, flexWrap:'wrap', alignItems:'center'}}>
-              <span className='badge'>Discord</span>
-              <span className='badge'>Telegram Web</span>
-              <span className='badge badge-cyan'>YouTube</span>
+              {M[lang].badges.map((b,i)=> <span key={i} className={'badge'+(i===2?' badge-cyan':'')}>{b}</span>)}
             </div>
           </div>
-          <div className='card' style={{height:360, borderRadius:16, display:'grid', placeItems:'center', overflow:'hidden'}}>
-            
-          </div>
+
+<motion.div
+  initial={{opacity:0, y:12}}
+  whileInView={{opacity:1, y:0}}
+  viewport={{once:true}}
+  transition={{duration:.6}}
+  className='card'
+  style={{height:360, borderRadius:16, display:'grid', overflow:'hidden'}}
+>
+  <div style={{position:'absolute',top:8,right:12,fontSize:12,color:'#9bdfff'}}>HERO MOUNT</div>
+  <NeonCore3D />
+</motion.div>
         </div>
       </section>
 
-      <Section id='about' title='О проекте'>
+      {/* ABOUT */}
+      <Section id='about' title={M[lang].about_t}>
         <div style={{display:'grid', gridTemplateColumns:'1.1fr .9fr', gap:20, alignItems:'center'}}>
           <div>
-            <p>StabiLink — настольное приложение для Windows, которое помогает обеспечить стабильную работу популярных онлайн‑сервисов при проблемах с доступом. Вы запускаете программу, нажимаете <b>START</b>, а дальше система автоматически подбирает оптимальные параметры подключения под вашего провайдера и ОС.</p>
+            <p>{M[lang].about_p1}</p>
             <ul style={{marginTop:12, lineHeight:1.8}}>
-              <li>Поддерживаются мессенджеры, видеоплатформы и стрим‑сервисы (полный список — внутри приложения).</li>
-              <li>Алгоритмы адаптируются под сетевые условия — никаких сложных настроек.</li>
-              <li>Коммуникация юридически нейтральна: мы не популяризируем способы доступа к ресурсам с ограничениями и не рекламируем VPN.</li>
+              <li>{M[lang].about_l1}</li>
+              <li>{M[lang].about_l2}</li>
+              <li>{M[lang].about_l3}</li>
             </ul>
-            <p style={{marginTop:12}}>Если у вас были сложности с доступом к сервисам вроде <b>Discord</b>, <b>Telegram Web</b> или <b>YouTube</b>, StabiLink стремится вернуть комфорт пользования и стабильность соединения, соблюдая требования законодательства РФ.</p>
+            <p style={{marginTop:12}}>{M[lang].about_p2}</p>
           </div>
           <div className='card' style={{height:260, borderRadius:16, display:'grid', placeItems:'center'}}>
             <GlobeIllustration/>
@@ -114,7 +200,8 @@ export default function App(){
         </div>
       </Section>
 
-      <Section id='advantages' title='Преимущества' alt>
+      {/* ADVANTAGES */}
+      <Section id='advantages' title={M[lang].adv_t} alt>
         <ul style={{display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(260px,1fr))', gap:16, padding:0, listStyle:'none', margin:0}}>
           {[
             {icon:<IconRocket/>, t:'Быстрый запуск — одна кнопка START'},
@@ -128,28 +215,31 @@ export default function App(){
         </ul>
       </Section>
 
-      <Section title='Ты всё ещё думаешь?'>
-        Начинай скорее пользоваться интернетом как в старые добрые времена — без забот!
+      {/* THINK CTA */}
+      <Section title={M[lang].think_t}>
+        {M[lang].think_p}
         <div style={{marginTop:16}}>
-          <button className='btn' onClick={()=>window.open('https://t.me/stabilink','_blank')}>Скачать сейчас</button>
+          <button className='btn' onClick={()=>window.open('https://t.me/stabilink','_blank')}>{M[lang].think_cta}</button>
         </div>
       </Section>
 
-      <Section id='how' title='Как начать пользоваться?' alt>
+      {/* HOW TO */}
+      <Section id='how' title={M[lang].how_t} alt>
         <ol style={{display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(220px,1fr))', gap:16}}>
-          <li className='card' style={{borderRadius:14, padding:16}}><b>1 — Перейди в Telegram</b><br/>Подпишись на официальный канал.</li>
-          <li className='card' style={{borderRadius:14, padding:16}}><b>2 — Скачай приложение</b><br/>Установи StabiLink для Windows.</li>
-          <li className='card' style={{borderRadius:14, padding:16}}><b>3 — Нажми START</b><br/>И пользуйся как обычно.</li>
+          <li className='card' style={{borderRadius:14, padding:16}}><b>{M[lang].how_s1}</b><br/>{M[lang].how_s1d}</li>
+          <li className='card' style={{borderRadius:14, padding:16}}><b>{M[lang].how_s2}</b><br/>{M[lang].how_s2d}</li>
+          <li className='card' style={{borderRadius:14, padding:16}}><b>{M[lang].how_s3}</b><br/>{M[lang].how_s3d}</li>
         </ol>
       </Section>
 
-      <Section title='Демонстрация'>
-        <p>Перетащи ползунок и сравни работу популярных сайтов до/после запуска приложения.</p>
+      {/* DEMO */}
+      <Section title={M[lang].demo_t}>
+        <p>{M[lang].demo_p}</p>
         <div style={{marginTop:16}}><CompareSlider/></div>
       </Section>
 
-      <Section id='pricing' title='Прайс' >
-        {/* embed pricing component inline to keep file small */}
+      {/* PRICING */}
+      <Section id='pricing' title={M[lang].pricing_t} >
         <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))', gap:16}}>
           <div className='card' style={{borderRadius:16, padding:20}}>
             <div style={{display:'flex', alignItems:'center', justifyContent:'space-between'}}>
@@ -185,7 +275,8 @@ export default function App(){
         </div>
       </Section>
 
-      <Section id='faq' title='FAQ' alt>
+      {/* FAQ */}
+      <Section id='faq' title={M[lang].faq_t} alt>
         <details className='card' style={{borderRadius:14, padding:16, marginBottom:12}}>
           <summary><b>Вы обычное стандартное VPN?</b></summary>
           <div style={{marginTop:8}}>Нет. Мы не используем VPN. Публичная версия сайта и приложения не содержит упоминаний и функциональности рекламы VPN.</div>
@@ -208,26 +299,28 @@ export default function App(){
         </details>
       </Section>
 
-      <Section id='contacts' title='Контакты'>
-        <p>Официальный канал с новостями и ссылками на загрузку.</p>
-        <button className='btn btn-ghost' onClick={()=>window.open('https://t.me/stabilink','_blank')}>Открыть Telegram</button>
+      {/* CONTACTS */}
+      <Section id='contacts' title={M[lang].contacts_t}>
+        <p>{M[lang].contacts_p}</p>
+        <button className='btn btn-ghost' onClick={()=>window.open('https://t.me/stabilink','_blank')}>{M[lang].open_tg}</button>
       </Section>
 
+      {/* FOOTER */}
       <footer style={{borderTop:'1px solid rgba(255,255,255,.08)', padding:'28px 0', background:'rgba(10,15,29,.85)', position:'relative', zIndex:2}}>
         <div style={{maxWidth:1100, margin:'0 auto', padding:'0 20px', display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:16, alignItems:'center', fontSize:14, color:'#9fb0d1'}}>
           <div>
             <div style={{color:'#e6f0ff', fontWeight:600}}>StabiLink</div>
-            <div style={{marginTop:6}}>© {new Date().getFullYear()} Все права защищены.</div>
+            <div style={{marginTop:6}}>© {new Date().getFullYear()} {M[lang].footer_rights}</div>
           </div>
           <div style={{textAlign:'center'}}>
             {['about','advantages','how','pricing','faq','contacts'].map(id=> (
               <a key={id} href={`#${id}`} onClick={(e)=>{e.preventDefault(); document.getElementById(id)?.scrollIntoView({behavior:'smooth'})}} style={{marginRight:10, color:'#9fb0d1'}}>
-                {id==='about'?'О проекте':id==='advantages'?'Преимущества':id==='how'?'Как пользоваться':id==='pricing'?'Прайс':id==='faq'?'FAQ':'Контакты'}
+                {id==='about'?M[lang].nav.about:id==='advantages'?M[lang].nav.advantages:id==='how'?M[lang].nav.how:id==='pricing'?M[lang].nav.pricing:id==='faq'?M[lang].nav.faq:M[lang].contacts_t}
               </a>
             ))}
           </div>
           <div style={{textAlign:'right'}}>
-            <a href="#" onClick={(e)=>{e.preventDefault(); alert('Покажем политику конфиденциальности позже')}} style={{color:'#9fb0d1'}}>Политика конфиденциальности</a>
+            <a href="/privacy.html" style={{color:'#9fb0d1'}}>{M[lang].privacy}</a>
           </div>
         </div>
       </footer>
