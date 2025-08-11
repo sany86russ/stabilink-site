@@ -120,30 +120,39 @@ li .bullet-dot{ display:flex; align-items:center; gap:8px; font-size:15px; line-
 }
 
 .about-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.about-img {
   max-width: 100%;
   height: auto;
-  filter: drop-shadow(0 0 15px rgba(0,255,255,0.3));
-  transition: transform 0.3s ease, filter 0.3s ease;
-}
-.about-img {
-  max-width: 380px;
-  width: 100%;
-  height: auto;
-  border-radius: 0;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-  animation: floatImage 6s ease-in-out infinite;
+  border-radius: 0; /* убираем грани */
+  box-shadow: none; /* без рамок */
+  transition: transform 0.4s ease, opacity 0.6s ease;
 }
 
-@keyframes floatImage {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
+.about-img:hover {
+  transform: scale(1.03);
 }
 
-.about-image:hover {
-  transform: scale(1.05);
-  filter: drop-shadow(0 0 25px rgba(0,255,255,0.6));
+.fade-in {
+  opacity: 0;
+  animation: fadeInMove 0.8s ease forwards;
 }
+
+@keyframes fadeInMove {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 
 @keyframes fadeInUp {
   from {
