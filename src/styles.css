@@ -1,4 +1,3 @@
-
 :root { color-scheme: dark; }
 * { box-sizing: border-box; }
 html, body, #root { height: 100%; }
@@ -27,20 +26,16 @@ a { color: inherit; }
 .price{font-family:'Space Grotesk', Inter; font-weight:800; font-size:28px; color:#bfe8ff}
 .note{margin-top:6px; font-size:12px; color:#8ea3c7}
 
-
 /* --- Raster icon sizing & layout tweaks (brand-consistent) --- */
-.icon-24{ width:28px; height:28px; flex:0 0 28px; display:inline-block; object-fit:contain; }
+.icon-32{ width:36px; height:36px; flex:0 0 36px; display:inline-block; object-fit:contain; }
 .features-grid .card{ gap:12px; align-items:flex-start; }
-.features-grid .card p{ font-size:16px; line-height:1.5; margin:0; }
+.features-grid .card span{ font-size:16px; line-height:1.55; }
 
 /* Bullets for pricing */
 .bullet-dot{ width:14px; height:14px; display:inline-block; vertical-align:middle; margin-right:8px; }
 li .bullet-dot{ display:flex; align-items:center; gap:8px; font-size:15px; line-height:1.6; }
 .pricing .price{ font-variation-settings: 'wght' 650; }
 
-/* Make steps numbers consistent */
+/* Steps */
 .steps .step{ display:flex; align-items:flex-start; gap:12px; }
-.steps .num{ width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; }
-
-/* Step number badge for 'Как начать' */
 .step-badge{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:9999px;background:#e8efff;color:#0b1220;font-weight:800;font-size:14px;line-height:1;box-shadow:0 2px 0 rgba(0,0,0,.15);margin-right:.5rem;margin-bottom:.25rem}
