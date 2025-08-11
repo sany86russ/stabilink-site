@@ -168,15 +168,7 @@ export default function App(){
             </div>
           </div>
 
-<motion.div
-  initial={{opacity:0, y:12}}
-  whileInView={{opacity:1, y:0}}
-  viewport={{once:true}}
-  transition={{duration:.6}}
-  className='card'
-  style={{height:360, borderRadius:16, display:'grid', overflow:'hidden'}}
->
-  <div style={{position:'absolute',top:8,right:12,fontSize:12,color:'#9bdfff'}}>HERO MOUNT</div>
+<motion.div className='card' style={{height:360, borderRadius:16, display:'grid', overflow:'hidden'}}>
   <NeonCore3D />
 </motion.div>
         </div>
